@@ -1,1 +1,1 @@
-# BalticSummit2023
+# Baltic Summit 2023 - Power Pages Masterclass
