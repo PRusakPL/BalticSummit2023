@@ -23,8 +23,8 @@ All what you need to prepare before workshop you can find in this document <a hr
 
 **BONUS TOPICS**
 <ol type="A">
-  <li>Web API in Power Pages/li>
-    <li>Calling Flow directly from Power Pages (synchronous)/li>
-      <li>Productivity tips: using Power Platform CLI / Visual Studio Code on the Web / XrmToolbox plugins to speed up work with Power Pages code./li>
+  <li>Web API in Power Pages</li>
+    <li>Calling Flow directly from Power Pages (synchronous)</li>
+      <li>Productivity tips: using Power Platform CLI / Visual Studio Code on the Web / XrmToolbox plugins to speed up work with Power Pages code.</li>
 </ol>
 
