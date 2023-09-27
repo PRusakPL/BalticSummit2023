@@ -114,7 +114,7 @@ $(document).ready(function() {
 		})
 		.done(function (response) {
 			const result = JSON.parse(response);			
-			alert("New speaker with SpeakerId: '" + response["speakerid"] + "' was added");
+			alert("New speaker with SpeakerId: '" + result["speakerid"] + "' was added");
 			console.log(response);
 		})
 		.fail(function (error) {
