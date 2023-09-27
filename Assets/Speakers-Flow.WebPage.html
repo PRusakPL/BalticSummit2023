@@ -1,0 +1,129 @@
+<style>
+    /* Adjust the styles as needed */
+  
+    form {
+      max-width: 800px;
+	  width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #042B3C;
+      border-radius: 5px;
+      background-color: #FEFEFE;
+    }
+  
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #042B3C;
+    }
+  
+    input[type="text"],
+    textarea,
+    input[type="datetime-local"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #042B3C;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      background-color: #FEFEFE;
+      color: #042B3C;
+    }
+  
+    input[type="submit"] {
+      background-color: #76BC21;
+      color: #FEFEFE;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  
+    input[type="submit"]:hover {
+      background-color: #FF4712;
+    }
+  </style>
+  
+
+<div class="row sectionBlockLayout text-left" style="display: flex; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;">
+    <div class="container" style="display: flex; flex-wrap: wrap;">
+      <div class="col-md-12 columnBlockLayout" style="flex-grow: 1; display: flex; flex-direction: column; min-width: 310px; word-break: break-word; padding: 5px; margin: 5px 0px;">
+        <h1 style="text-align: left;">Power Automate integration example - Create Speaker using Power Automate call</h1></div>
+    </div>
+  </div>
+  <div class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; min-height: 15px;"></div>
+  <div class="row sectionBlockLayout text-left" style="display: flex; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;">
+    <div class="container" style="padding: 0px; display: flex; flex-wrap: wrap;">
+      <div class="col-md-12 columnBlockLayout" style="flex-grow: 1; display: flex; flex-direction: column; min-width: 310px; word-break: break-word; margin: 5px 0px; padding: 5px;">
+        <!--include PagesWebAPIHelper helper for WebAPI-->
+        {% include 'PagesWebAPIHelper' %}
+
+        <form id="myForm">
+            <label for="bs_name">Full Name:</label>
+            <input type="text" id="bs_name" name="bs_name" required><br>
+          
+            <label for="bs_firstname">First Name:</label>
+			<input type="text" id="bs_firstname" name="bs_firstname"><br>            
+			
+			<label for="bs_lastname">Last Name:</label>
+			<input type="text" id="bs_lastname" name="bs_lastname"><br>            
+			
+			<label for="bs_role">Role:</label>
+			<input type="text" id="bs_role" name="bs_role"><br>            
+          
+			<label for="bs_description">Description:</label>
+			<textarea id="bs_description" name="bs_description"></textarea><br>            
+			
+            <input type="submit" value="Submit">
+        </form>
+      
+
+
+    </div>
+    </div>
+  </div>
+
+<script>
+
+$(document).ready(function() {
+    $('#myForm').submit(function(event) {
+        
+		event.preventDefault();                         
+        var flowUrl = "https://pp4ever.powerappsportals.com/_api/cloudflow/v1.0/trigger/2ae0ad30-9f0d-dace-f50c-8501e1d710d9";
+
+        var data = {};
+        data["Name"] = $('#bs_name').val();
+		data["FirstName"] = $('#bs_firstname').val();
+		data["LastName"] = $('#bs_lastname').val();
+		data["Role"] = $('#bs_role').val();
+		data["Description"] = $('#bs_description').val();
+
+		var payload = {};		
+		payload.eventData = JSON.stringify(data);
+		
+		shell.ajaxSafePost({
+			type: "POST",
+			contentType: "application/json",
+			url: flowUrl,
+			data: JSON.stringify(payload),
+			processData: false,
+			global: false,
+		})
+		.done(function (response) {
+			const result = JSON.parse(response);			
+			alert("New speaker with SpeakerId: '" + response["speakerid"] + "' was added");
+			console.log(response);
+		})
+		.fail(function (error) {
+			alert("Error occurred when calling Power Automate Flow");
+			console.log(error);
+		});
+       
+    });    
+
+});  
+
+</script>
