@@ -1,0 +1,57 @@
+{% fetchxml speakers %}
+	<fetch returntotalrecordcount="true">
+<entity name="bs_speaker">
+	<attribute name="bs_name"/>
+	<attribute name="bs_firstname"/>
+	<attribute name="bs_lastname"/>
+	<attribute name="bs_role"/>
+	<attribute name="bs_imageurl"/>
+	<attribute name="bs_linkedinurl"/>
+	<attribute name="bs_xurl"/>
+	<attribute name="bs_description"/>
+</entity>
+</fetch>
+{% endfetchxml %}
+
+{% if speakers.results.entities.size > 0 %}
+    <div class="col-sm-12">
+      <ul style="list-style: none;">
+          {% for speaker in speakers.results.entities limit:count %}
+			<li class="col-md-4">
+				 <div class="panel panel-default">
+                      <div class="panel-heading" style="text-align:center;">
+						<img src="{{speaker.bs_imageurl}}" border="0" class="img-fluid d-inline" width="200px" height="200px;" style="display: block; width: 200px; height: 200px;">          
+					  </div>
+                      <div class="panel-body">
+                          <strong>{{speaker.bs_name}}</strong>
+						  <p>{{speaker.bs_description}}</p>
+						  <p style="font-size: 12px;">{{speaker.bs_role}}</p>
+                      </div>
+                      <div class="panel-footer">
+					  <p>
+							{% if speaker.bs_linkedinurl %}
+							<u>
+								<span class="ml-rte-link-wrapper">
+									<a href="{{speaker.bs_linkedinurl}}" target="_blank">Linkedin →</a>
+								</span>
+							</u> 
+							{% endif %}
+							{% if speaker.bs_linkedinurl and speaker.bs_xurl %}
+							&nbsp;|&nbsp;
+							{% endif %}
+							{% if speaker.bs_xurl %}
+							<u>
+								<span class="ml-rte-link-wrapper">
+									<a href="{{speaker.bs_xurl}}" target="_blank">Twitter →</a>
+								</span>
+							</u>
+							{% endif %}
+						</p>
+					  </div>
+                  </div>                 
+			</li>
+          {% endfor %}
+      </ul>
+    </div>
+    
+{% endif %}

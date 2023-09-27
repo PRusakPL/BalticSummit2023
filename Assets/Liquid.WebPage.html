@@ -1,0 +1,207 @@
+<style type="text/css">
+
+.liquidCodeHeader{
+	color: #03C04A;
+}
+.liquidCode{
+
+}
+.liquidResultsHeader{
+	color: #028A0F;
+}
+.liquidResults{
+}
+</style>
+
+<h2>[1] Liquid Operators</h2>
+<!-- SAMPLE 1 -->
+<hr/>
+<h3 class="liquidCodeHeader">Liquid code:</h3>
+<p> 
+	{% raw %}
+	<xmp>
+		{% if page.title contains 'Liquid' %}
+			The title contains the word Liquid.
+		{% endif %}
+	</xmp>
+	{% endraw %}
+</p>
+<h3 class="liquidResultsHeader">Output</h3>
+<p>
+{% if page.title contains 'Liquid' %}
+	The title contains the word Liquid.
+{% endif %}
+</p>
+<hr/>
+
+
+<h2>[2] Liquid Objects</h2>
+<!-- SAMPLE 2 -->
+<hr/>
+<h3 class="liquidCodeHeader">Liquid code:</h3>
+<p> 
+	{% raw %}
+	<xmp>
+		{% assign speaker = entities.bs_speaker['de5ee211-205d-ee11-be6f-000d3a2f6f99'] %} 
+		{% if speaker %} 
+			{{ speaker.bs_name }} ({{ speaker.bs_role }}) 
+		{% else %} 
+			No speaker record found.  
+		{% endif %}          
+	</xmp>    
+	{% endraw %}
+</p>
+<h3 class="liquidResultsHeader">Output</h3>
+<p>
+	{% assign speaker = entities.bs_speaker['de5ee211-205d-ee11-be6f-000d3a2f6f99'] %} 
+	{% if speaker %} 
+		{{ speaker.bs_name }} ({{ speaker.bs_role }}) 
+	{% else %} 
+		No speaker record found.  
+	{% endif %}    
+</p>
+<hr/>
+
+<h2>[3] Liquid Tags</h2>
+<!-- SAMPLE 3 -->
+<hr/>
+<h3 class="liquidCodeHeader">Liquid code:</h3>
+<p> 
+	{% raw %}
+	<xmp>
+		{% if user.fullname == 'Piotr Rusak' %}
+			Hello, Piotr.
+		{% elsif user.fullname == 'Arpit Shrivastava' %}
+			Hello, Arpit.
+		{% else %}
+			Hello, Student.
+		{% endif %}          
+	</xmp>
+	{% endraw %}
+</p>
+<h3 class="liquidResultsHeader">Output</h3>
+<p>
+   {% if user.fullname == 'Piotr Rusak' %}
+		Hello, Piotr.
+	{% elsif user.fullname == 'Arpit Shrivastava' %}
+		Hello, Arpit.
+	{% else %}
+		Hello, Student.
+	{% endif %}            
+</p>
+<hr/>
+
+<h2>[4] Liquid Variable Tags</h2>
+<!-- SAMPLE 4 -->
+<hr/>
+<h3 class="liquidCodeHeader">Liquid code:</h3>
+<p> 
+	{% raw %}
+	<xmp> 
+		{% assign is_valid = true %}
+		{% if is_valid %}
+			It is valid.
+		{% endif %}
+
+		{% assign name = 'Piotr Rusak' | upcase %}
+		{{ name }}
+	</xmp>    
+	{% endraw %}
+</p>
+<h3 class="liquidResultsHeader">Output</h3>
+<p>
+	{% assign is_valid = true %}
+	{% if is_valid %}              
+		It is valid.</br>               
+	{% endif %}
+	{% assign name = 'Piotr Rusak' | upcase %}
+	{{ name }}</br>
+</p>
+<hr/>
+
+<h2>[5] Liquid Filters</h2>
+<!-- SAMPLE 5 -->
+<hr/>
+<h3 class="liquidCodeHeader">Liquid code:</h3>
+<p> 
+	{% raw %} 
+	<xmp>
+	{{ 2 | times: 2 | minus: 1 }} </br>
+	{{ "Hello, " | append: user.firstname }} </br>    
+	
+	My income is {{ 12345.005 | format: "C", "en-US" }} before tax. <br/>
+	When I grow up and move to south of France, I will earn {{ 67890.049 | format: "C", "fr-FR" }} per week.
+	</xmp>
+	{% endraw %}
+</p>
+<h3 class="liquidResultsHeader">Output</h3>
+<p>
+	{{ 2 | times: 2 | minus: 1 }} </br>
+	{{ "Hello, " | append: user.firstname }} </br>    
+
+	My income is {{ 12345.005 | format: "C", "en-US" }} before tax. <br/>
+	When I grow up and move to south of France, I will earn {{ 67890.049 | format: "C", "fr-FR" }} per week.</br> 
+</p>
+<hr/>
+
+<h2>[6] Liquid FetchXML</h2>
+<!-- SAMPLE 6 -->
+<hr/>
+<h3 class="liquidCodeHeader">Liquid code:</h3>
+<p> 
+	{% raw %} 
+	<xmp>
+	  {% fetchxml speakers %}
+	  <fetch returntotalrecordcount="true">
+	<entity name="bs_speaker">
+		<attribute name="bs_name"/>
+		<attribute name="bs_firstname"/>
+		<attribute name="bs_lastname"/>
+		<attribute name="bs_role"/>
+		<attribute name="bs_imageurl"/>
+		<attribute name="bs_linkedinurl"/>
+		<attribute name="bs_xurl"/>
+		<attribute name="bs_description"/>
+	</entity>
+</fetch>
+	  {% endfetchxml %}
+	  {% if speakers.results.total_record_count > 0 %}
+		  {% for speaker in speakers.results.entities %}
+		  <ul>
+	<li><b>{{speaker.bs_name}}</b></li>
+	<li>{{speaker.bs_role}}</li>
+</ul>
+		  {% endfor %}
+	  {% else %}    
+		  No speakers found.
+	  {% endif %}    
+	</xmp>    
+	{% endraw %}
+</p>
+<h3 class="liquidResultsHeader">Output</h3>
+<p>
+	{% fetchxml speakers %}
+	<fetch returntotalrecordcount="true">
+<entity name="bs_speaker">
+	<attribute name="bs_name"/>
+	<attribute name="bs_firstname"/>
+	<attribute name="bs_lastname"/>
+	<attribute name="bs_role"/>
+	<attribute name="bs_imageurl"/>
+	<attribute name="bs_linkedinurl"/>
+	<attribute name="bs_xurl"/>
+	<attribute name="bs_description"/>
+</entity>
+</fetch>
+	{% endfetchxml %}
+	{% if speakers.results.total_record_count > 0 %}
+		{% for speaker in speakers.results.entities %}
+		<ul>
+<li><b>{{speaker.bs_name}}</b></li>
+<li>{{speaker.bs_role}}</li>
+</ul>
+		{% endfor %}
+	{% else %}    
+		No speakers found.
+	{% endif %}    
+</p>
