@@ -205,3 +205,24 @@
 		No speakers found.
 	{% endif %}    
 </p>
+<hr/>
+
+<h2>[7] Liquid Content Snippets</h2>
+<!-- SAMPLE 7 -->
+<hr/>
+<h3 class="liquidCodeHeader">Liquid code:</h3>
+<p> 
+	{% raw %} 
+	<xmp>
+		{% editable snippets 'BalticSummitHTML' type: 'html' %}  <br/>
+		{% include 'snippet' snippet_name:'BalticSummit' %}  <br/>
+		{{ snippets['BalticSummit']}}  <br/>
+	</xmp>    
+	{% endraw %}
+</p>
+<h3 class="liquidResultsHeader">Output</h3>
+<p>
+	{% editable snippets 'BalticSummitHTML' type: 'html' %}  <br/>
+	{% include 'snippet' snippet_name:'BalticSummit' %}  <br/>
+	{{ snippets['BalticSummit']}}  <br/>
+</p>
